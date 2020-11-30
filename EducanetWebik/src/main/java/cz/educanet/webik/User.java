@@ -15,7 +15,7 @@ public class User {
         this.username = username;
     }
 
-    public void deleteUsername() {
-        this.username = "";
+    public void renameUser(String newUsername) {
+        this.username = newUsername;
     }
 }

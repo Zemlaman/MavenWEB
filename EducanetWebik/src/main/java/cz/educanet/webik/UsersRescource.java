@@ -47,24 +47,20 @@ public class UsersRescource {
     }
 
     @PUT
-    @Path(("/{{username}}"))
-    public Object changeUser(User user, String username, @QueryParam("newUsername") String newUsername) {
+    @Path("/{username}")
+    public Object changeUser(User user, @PathParam("username") String username, @QueryParam("newUsername") String newUsername) {
         User reuser = new User(username);
-        if(userCheck(reuser)) {
             for (int i = 0; i < names.size(); i++) {
-                if(names.get(i).getUsername().equals(user.getUsername())) {
-                    names.get(i).setUsername(newUsername);
+                if(names.get(i).getUsername().equals(reuser.getUsername())) {
+                    names.get(i).renameUser(newUsername);
 
                     return Response.ok("Username changed successfully").build();
 
                 }
             }
-        } else {
             return Response.ok("Username already exists").build();
         }
 
-        return Response.serverError().build();
-    }
 
     public Boolean userCheck(User user) {
         for (int i = 0; i < names.size(); i++) {
