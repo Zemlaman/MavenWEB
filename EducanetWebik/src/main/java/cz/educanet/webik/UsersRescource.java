@@ -34,5 +34,19 @@ public class UsersRescource {
 
         return Response.ok().build();
     }
+
+    @PUT
+    @Path("/{username}")
+    public Response changeUser(@PathParam("username") String username, @QueryParam("username") String newUsername) {
+        User user = new User(username);
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).getUsername().equals(user.getUsername())) {
+                names.get(i).setUsername(newUsername);
+
+                return Response.ok("Done").build();
+            }
+        }
+        return Response.serverError().build();
+    }
 }
 
