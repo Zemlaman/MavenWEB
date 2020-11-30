@@ -30,9 +30,9 @@ public class UsersRescource {
     //TODO: Create DELETE,PUT
 
     @DELETE
-    public Response removeUser(User user) {
-        if(user != null) {
-            names.remove(user);
+    public Response removeUser(@QueryParam("username") String username) {
+        if(username != null) {
+            names.remove(user + username);
 
             return Response.ok().build();
         }
