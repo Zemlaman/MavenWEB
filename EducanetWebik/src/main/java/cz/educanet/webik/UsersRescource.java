@@ -29,8 +29,15 @@ public class UsersRescource {
 
     //TODO: Create DELETE,PUT
 
-    @DELETE public Response removeUser(User user) {
-        names.remove(user);
+    @DELETE
+    public Response removeUser(User user) {
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).getUsername().equals(user.getUsername())) {
+                names.remove(user);
+            } else {
+                return Response.serverError().build();
+            }
+        }
 
         return Response.ok().build();
     }
