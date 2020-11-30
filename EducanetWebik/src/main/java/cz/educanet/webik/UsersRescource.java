@@ -29,13 +29,23 @@ public class UsersRescource {
 
     //TODO: Create DELETE,PUT
 
+    public Boolean findUser(User user) {
+        for (int x = 0; x < names.size(); x++) {
+            if (names.get(x).getUsername().equals(user.getUsername())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     @DELETE
     public Response removeUser(User user) {
-        for (int y = 0; y < names.size(); y++) {
-            if (names.get(y).getUsername().equals(user.getUsername())) {
-                names.remove(user);
-                return Response.ok().build();
-            }
+        if(findUser(user)) {
+            names.remove(user);
+
+            return Response.ok().build();
         }
         return Response.serverError().build();
 
