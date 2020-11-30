@@ -22,9 +22,13 @@ public class UsersRescource {
     @POST //Add user to array
     public Response createUser(@QueryParam("username") String username) {
         User user = new User(username);
+        if(userCheck(user)) {
+
+            return Response.ok("This username already exists").build();
+        }
         names.add(user);
 
-        return Response.ok().build();
+        return Response.ok("This username is ok").build();
     }
 
     //TODO: Create DELETE,PUT
@@ -34,6 +38,7 @@ public class UsersRescource {
         if(username != null) {
             names.clear();
             //names.remove(user + username);
+            //names.remove(user);
 
             return Response.ok().build();
         }
@@ -42,17 +47,34 @@ public class UsersRescource {
     }
 
     @PUT
-    @Path("/{username}")
-    public Response changeUser(@PathParam("username") String username, @QueryParam("username") String newUsername) {
-        User user = new User(username);
+    @Path(("/{{username}}"))
+    public Object changeUser(User user, String username, @QueryParam("newUsername") String newUsername) {
+        User reuser = new User(username);
+        if(userCheck(reuser)) {
+            for (int i = 0; i < names.size(); i++) {
+                if(names.get(i).getUsername().equals(user.getUsername())) {
+                    names.get(i).setUsername(newUsername);
+
+                    return Response.ok("Username changed successfully").build();
+
+                }
+            }
+        } else {
+            return Response.ok("Username already exists").build();
+        }
+
+        return Response.serverError().build();
+    }
+
+    public Boolean userCheck(User user) {
         for (int i = 0; i < names.size(); i++) {
             if (names.get(i).getUsername().equals(user.getUsername())) {
-                names.get(i).setUsername(newUsername);
-
-                return Response.ok().build();
+                return true;
+            } else {
+                return false;
             }
         }
-        return Response.serverError().build();
+        return false;
     }
 }
 
