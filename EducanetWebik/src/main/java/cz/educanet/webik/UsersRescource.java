@@ -31,15 +31,14 @@ public class UsersRescource {
 
     @DELETE
     public Response removeUser(User user) {
-        for (int i = 0; i < names.size(); i++) {
-            if (names.get(i).getUsername().equals(user.getUsername())) {
+        for (int y = 0; y < names.size(); y++) {
+            if (names.get(y).getUsername().equals(user.getUsername())) {
                 names.remove(user);
-            } else {
-                return Response.serverError().build();
+                return Response.ok().build();
             }
         }
+        return Response.serverError().build();
 
-        return Response.ok().build();
     }
 
     @PUT
