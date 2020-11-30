@@ -32,7 +32,8 @@ public class UsersRescource {
     @DELETE
     public Response removeUser(@QueryParam("username") String username) {
         if(username != null) {
-            names.remove(user + username);
+            names.clear();
+            //names.remove(user + username);
 
             return Response.ok().build();
         }
