@@ -43,7 +43,7 @@ public class UsersRescource {
             if (names.get(i).getUsername().equals(user.getUsername())) {
                 names.get(i).setUsername(newUsername);
 
-                return Response.ok("Done").build();
+                return Response.ok().build();
             }
         }
         return Response.serverError().build();
